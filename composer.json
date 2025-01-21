@@ -1,0 +1,9 @@
+{
+    "require": {
+        "lodash-php/lodash-php": "^0.09.0",
+        "respect/validation": "^2.4"
+    },
+    "require-dev": {
+        "vimeo/psalm": "^5.26"
+    }
+}
