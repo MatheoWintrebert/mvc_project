@@ -1,14 +1,6 @@
 {
     "1": {
-        "email": "testing@test.test",
-        "password": "$2y$10$Myb\/iXsKKC7cJ63l82ShhOmMrC9VOWE7eKuGr5Odt79aZUJfGK.CS"
-    },
-    "2": {
-        "email": "testing2@test.test",
-        "password": "$2y$10$vprAs33v0JUTUVSKMey0U.usvz\/OKpzHbn3WA25Y.4oMlx7pKHbhO"
-    },
-    "3": {
-        "email": "testing3@test.test",
-        "password": "$2y$10$J36Ed6SHCYoPMLzAPBK99enCN7Ynn.4yqEa8GRgvucRFYOVHWGtru"
+        "email": "test@test.test",
+        "password": "$2y$10$yIodOjOxtXLVBcCHR0muT.538ZivnjGc5VPtcfOrNebfJxIjBHW7G"
     }
 }

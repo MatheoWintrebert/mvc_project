@@ -14,20 +14,27 @@ class Register
 
     public function verifyExistingEmail(string $email): bool
     {
-        $bool = true;
         $filepath = "json/accounts.json";
 
         // Lire les données existantes
         $content = file_get_contents($filepath);
+
+        // Décoder le contenu JSON
         $data = json_decode($content, true);
 
+        // Si les données ne sont pas un tableau, les initialiser comme un tableau vide
+        if (!is_array($data)) {
+            $data = [];
+        }
+
         // Vérifier si l'adresse e-mail existe dans les données
-        $bool = !array_filter($data, function (array $account) use ($email): bool {
+        $exists = array_filter($data, function (array $account) use ($email): bool {
             return isset($account['email']) && $account['email'] === $email;
         });
 
-        return $bool;
+        return empty($exists); // Retourne true si aucune correspondance n'est trouvée
     }
+
 
 
     public function saveAccount(string $email, string $password, string $verifyPassword): bool
@@ -48,11 +55,10 @@ class Register
         if (file_exists($filepath)) {
             $content = file_get_contents($filepath);
             $data = json_decode($content, true) ?? [];
+            
+            $id = count($data) + 1;
+            $data[$id] = ["email" => $email, "password" => $password];
         }
-
-        $id = count($data) + 1;
-        $data[$id] = ["email" => $email, "password" => $password];
-
         $json = json_encode($data, JSON_PRETTY_PRINT);
         return file_put_contents($filepath, $json) !== false;
     }
