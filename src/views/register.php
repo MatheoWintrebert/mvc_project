@@ -1,7 +1,5 @@
 <body>
-    <h1><?php if ($errorAlert !== '') {
-            echo $errorAlert;
-        } ?></h1>
+    <?php echo $errorAlert !== "" ? '<div class="alert alert-danger" role="alert">' . $errorAlert . '</div>' : ""; ?>
     <form id="registerForm" name="registerForm" method="post" action="./?action=register">
         <div class="mb-3">
             <label for="email" class="form-label">Adresse mail</label>

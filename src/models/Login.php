@@ -1,7 +1,7 @@
 <?php
 class Login
 {
-    public function searchMail(string $email, string $password)
+    public function searchMail(string $email, string $password): bool
     {
         $bool = false;
         $filepath = "json/accounts.json";
@@ -11,16 +11,16 @@ class Login
         $data = json_decode($content, true);
 
         // Vérifier si l'adresse e-mail existe dans les données
-        foreach ($data as $account) {
-            if (isset($account['email']) && $account['email'] === $email) {
-                $this->verifyPassword($account, $password);
-                $bool = true; // L'adresse e-mail existe déjà
-            }
-        }
+        /* @param array<string> $account */
+        $bool = (bool) array_filter($data, function (array $account) use ($email, $password):bool {
+            return isset($account['email']) && $account['email'] === $email && $this->verifyPassword($account, $password);
+        });
+
 
         return $bool;
     }
-    public function verifyPassword($account, $password)
+    /* @param array<string> $account */
+    public function verifyPassword(array $account, string $password): bool
     {
         return password_verify($account['password'], $password);
     }
