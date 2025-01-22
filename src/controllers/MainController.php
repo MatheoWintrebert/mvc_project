@@ -1,7 +1,7 @@
 <?php
-
 class MainController {
-  private $actions;
+  /** @property-read array<string, string> $actions */
+  private readonly array $actions;
 
   /**
   * Instancie un MainController.
@@ -28,7 +28,7 @@ class MainController {
   */
   public function getControllerByAction(string $action): string {
     // Définir si on redire sur 404, ou Home si connecté et Login si non-connecté
-    return array_key_exists($action, $this->actions) ? $this->actions[$action] : http_response_code(404);
+    return array_key_exists($action, $this->actions) ? $this->actions[$action] : http_response_code(404); // isLoggedOn() ? $this->actions["home"] : $this->action["login"];
   }
 
   /**

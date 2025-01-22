@@ -1,5 +1,4 @@
 <?php
-
 $hashed_password = password_hash("azertyui", PASSWORD_BCRYPT);
 
 $error_message = "";
@@ -29,4 +28,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 include_once "$root/views/changePassword.php";
-?>
