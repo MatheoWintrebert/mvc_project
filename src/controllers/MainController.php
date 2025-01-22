@@ -14,6 +14,7 @@ class MainController {
     $this->actions = [
       "login" => "LoginController.php",
       "profile" => "ProfileController.php",
+      "changePassword" => "ChangePasswordController.php", 
     ];
   }
 
