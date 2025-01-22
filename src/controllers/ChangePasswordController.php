@@ -27,4 +27,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   }
 }
 
+$title = "Changer de mot de passe";
 include_once "$root/views/changePassword.php";
