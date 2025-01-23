@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 class Login
 {
     public function searchMail(string $email, string $password): bool
@@ -15,8 +16,6 @@ class Login
         $bool = (bool) array_filter(array: $data, callback: function (array $account) use ($email, $password): bool {
             return isset($account['email']) && $account['email'] === $email && $this->verifyPassword(account: $account, password: $password);
         });
-
-
         return $bool;
     }
     /* @param array<string> $account */

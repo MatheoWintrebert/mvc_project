@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 class Register
 {
     public function verifyPassword(string $password, string $verifyPassword): bool

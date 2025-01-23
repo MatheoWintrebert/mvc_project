@@ -1,3 +1,5 @@
+<?php declare(strict_types=1); ?>
+
 <body>
     <?php echo $errorAlert !== "" ? '<div class="alert alert-danger" role="alert">' . $errorAlert . '</div>' : ""; ?>
     <form id="loginForm" name="loginForm" method="post" action="./?action=login">

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 include_once "$root/models/Register.php";
 $register = new Register();
 $title = "Register";
@@ -12,3 +13,4 @@ if ((isset($_POST["email"])) && (isset($_POST["password"])) && (isset($_POST["ve
 include_once "$root/views/header.php";
 include_once "$root/views/register.php";
 include_once "$root/views/footer.php";
+?>

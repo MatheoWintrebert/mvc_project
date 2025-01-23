@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 include_once "$root/models/Login.php";
 $login = new Login();
 $title = "Login";

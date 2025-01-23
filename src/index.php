@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 $root = dirname(path: __FILE__);
 
 include_once "$root/controllers/MainController.php";
