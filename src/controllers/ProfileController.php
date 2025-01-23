@@ -1,6 +1,4 @@
 <?php
-$title = "Profile";
-
 $username = "Zerdov";
 $nbWonGames = 19828387615617187192192791721972;
 $nbInProgressGames = 8753;

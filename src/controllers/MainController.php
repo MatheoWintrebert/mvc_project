@@ -1,6 +1,4 @@
 <?php
-
-
 function getControllerByAction(string $action): string | int | bool {
   /** @var array<string, string> $actions */
   $routes = [
@@ -9,7 +7,7 @@ function getControllerByAction(string $action): string | int | bool {
     "changePassword" => "ChangePasswordController.php", 
   ];
   // Définir si on redire sur 404, ou Home si connecté et Login si non-connecté
-  return array_key_exists($action, $routes) ? $routes[$action] : http_response_code(404); // isLoggedOn() ? $routes["home"] : $routes["login"];
+  return array_key_exists(key: $action, array: $routes) ? $routes[$action] : http_response_code(response_code: 404); // isLoggedOn() ? $routes["home"] : $routes["login"];
 }
 
 function getHeaderByAction(string $action): string {
