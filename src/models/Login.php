@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+use function _\filter;
 class Login
 {
     public function searchMail(string $email, string $password): bool
@@ -13,10 +14,10 @@ class Login
 
         // Vérifier si l'adresse e-mail existe dans les données
         /* @param array<string> $account */
-        $bool = (bool) array_filter(array: $data, callback: function (array $account) use ($email, $password): bool {
+        $bool = filter(array: $data, predicate: function (array $account) use ($email, $password): bool {
             return isset($account['email']) && $account['email'] === $email && $this->verifyPassword(account: $account, password: $password);
         });
-        return $bool;
+        return !empty($bool);
     }
     /* @param array<string> $account */
     public function verifyPassword(array $account, string $password): bool

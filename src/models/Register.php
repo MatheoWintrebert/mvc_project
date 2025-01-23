@@ -1,5 +1,7 @@
 <?php
 declare(strict_types=1);
+use function _\filter;
+use function _\size;
 class Register
 {
     public function verifyPassword(string $password, string $verifyPassword): bool
@@ -9,8 +11,8 @@ class Register
 
     public function verifyEmail(string $email): bool
     {
-        $pattern = '/^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,4}$/';
-        return preg_match(pattern: $pattern, subject: $email) === 1;
+        $ret = filter_var(value: $email, filter: FILTER_VALIDATE_EMAIL) ? true : false;
+        return $ret;
     }
 
     public function verifyExistingEmail(string $email): bool
@@ -24,12 +26,10 @@ class Register
         $data = json_decode(json: $content, associative: true);
 
         // Si les données ne sont pas un tableau, les initialiser comme un tableau vide
-        if (!is_array(value: $data)) {
-            $data = [];
-        }
+        $data = $data ?? [];
 
         // Vérifier si l'adresse e-mail existe dans les données
-        $exists = array_filter(array: $data, callback: function (array $account) use ($email): bool {
+        $exists = filter(array: $data, predicate: function (array $account) use ($email): bool {
             return isset($account['email']) && $account['email'] === $email;
         });
 
@@ -57,8 +57,9 @@ class Register
             $content = file_get_contents(filename: $filepath);
             $data = json_decode(json: $content, associative: true) ?? [];
 
-            $id = count(value: $data) + 1;
+            $id = size(collection: $data) + 1;
             $data[$id] = ["email" => $email, "password" => $password];
+
         }
         $json = json_encode(value: $data, flags: JSON_PRETTY_PRINT);
         return file_put_contents(filename: $filepath, data: $json) !== false;
