@@ -1,6 +1,6 @@
 <?php
-/** @var string */
-$root = dirname(__FILE__);
+declare(strict_types=1);
+$root = dirname(path: __FILE__);
 
 include_once "$root/controllers/MainController.php";
 
@@ -14,9 +14,9 @@ if (isset($_REQUEST["action"])) {
 /** @var MainController */
 $MainController = new MainController();
 
-$header = $MainController->getHeaderByAction($action);
-$controller = $MainController->getControllerByAction($action);
-$footer = $MainController->getFooterByAction($action);
+$header = $MainController->getHeaderByAction(action: $action);
+$controller = $MainController->getControllerByAction(action: $action);
+$footer = $MainController->getFooterByAction(action: $action);
 
 include_once "$root/views/header.php";
 include_once "$root/controllers/".$controller;

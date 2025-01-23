@@ -1,6 +1,7 @@
 <?php
-
-class MainController {
+declare(strict_types=1);
+class MainController
+{
   private $actions;
 
   /**
@@ -14,6 +15,7 @@ class MainController {
     $this->actions = [
       "login" => "LoginController.php",
       "profile" => "ProfileController.php",
+      "register" => "registerController.php",
     ];
   }
 
