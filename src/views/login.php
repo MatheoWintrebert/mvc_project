@@ -1,8 +1,8 @@
 <?php declare(strict_types=1); ?>
 
 <body>
-    <?php echo $errorAlert !== "" ? '<div class="alert alert-danger" role="alert">' . $errorAlert . '</div>' : ""; ?>
     <form id="loginForm" name="loginForm" method="post" action="./?action=login">
+        <?php echo $errorAlert !== "" ? '<div class="alert alert-danger" role="alert">' . $errorAlert . '</div>' : ""; ?>
         <div class="mb-3">
             <label for="email" class="form-label">Adresse mail</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="exemple@email.com">
