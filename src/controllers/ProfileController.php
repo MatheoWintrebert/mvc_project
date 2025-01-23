@@ -1,6 +1,5 @@
 <?php
-declare(strict_types=1);
-$title = "Profile";
+declare(strict_types = 1);
 
 $username = "Zerdov";
 $nbWonGames = 19828387615617187192192791721972;

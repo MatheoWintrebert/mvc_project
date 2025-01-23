@@ -1,22 +1,19 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
+
+/** @var string */
 $root = dirname(path: __FILE__);
 
 include_once "$root/controllers/MainController.php";
 
-/** @var string */
-$action = "login";
 // $_REQUEST = $_POST OU $_GET (du moment que la variable est set dans l'un des 2 ça passe la condition)
-if (isset($_REQUEST["action"])) {
-  $action = $_REQUEST["action"];
-}
+/** @var string */
+$action = isset($_REQUEST["action"]) ? $_REQUEST["action"] : "login";
 
-/** @var MainController */
-$MainController = new MainController();
+$header = getHeaderByAction(action: $action);
+$controller = getControllerByAction(action: $action);
+$footer = getFooterByAction(action: $action);
 
-$header = $MainController->getHeaderByAction(action: $action);
-$controller = $MainController->getControllerByAction(action: $action);
-$footer = $MainController->getFooterByAction(action: $action);
 
 include_once "$root/views/header.php";
 include_once "$root/controllers/".$controller;
