@@ -2,7 +2,7 @@
 
 <div class="container">
   <form method="POST" action="./?action=changePassword">
-    <?php echo $error_message !== "" ? '<div class="alert alert-danger" role="alert">'.$error_message.'</div>' : ""; ?>
+    <?php echo isset($error_message) && !empty($error_message) ? '<div class="alert alert-danger" role="alert">'.$error_message.'</div>' : ""; ?>
     <div class="mb-3">
       <label for="current-password" class="form-label">Mot de passe actuel:</label>
       <div class="input-group">

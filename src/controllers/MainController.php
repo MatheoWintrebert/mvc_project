@@ -42,7 +42,7 @@ class MainController {
   public function getHeaderByAction(string $action): string {
     return $action === "login"
       ? "<header></header>"
-      : `
+      : '
       <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
@@ -81,7 +81,7 @@ class MainController {
         </div>
       </nav>
     </header>
-    `;
+    ';
   }
 
   public function getFooterByAction(string $action): string {
