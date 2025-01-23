@@ -55,7 +55,7 @@ class Register
         if (file_exists(filename: $filepath)) {
             $content = file_get_contents(filename: $filepath);
             $data = json_decode(json: $content, associative: true) ?? [];
-            
+
             $id = count(value: $data) + 1;
             $data[$id] = ["email" => $email, "password" => $password];
         }

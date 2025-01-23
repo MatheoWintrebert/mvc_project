@@ -12,7 +12,7 @@ class Login
 
         // Vérifier si l'adresse e-mail existe dans les données
         /* @param array<string> $account */
-        $bool = (bool) array_filter(array: $data, callback: function (array $account) use ($email, $password):bool {
+        $bool = (bool) array_filter(array: $data, callback: function (array $account) use ($email, $password): bool {
             return isset($account['email']) && $account['email'] === $email && $this->verifyPassword(account: $account, password: $password);
         });
 

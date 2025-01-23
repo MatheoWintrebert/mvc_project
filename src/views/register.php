@@ -11,9 +11,11 @@
         </div>
         <div class=" mb-3">
             <label for="verifyPassword" class="form-label">Vérifier le mot de passe</label>
-            <input type="password" class="form-control" id="verifyPassword" name="verifyPassword" placeholder="••••••••">
+            <input type="password" class="form-control" id="verifyPassword" name="verifyPassword"
+                placeholder="••••••••">
         </div>
         <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
-    <p>Déjà un compte? <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="?action=login">Se connecter</a>
+    <p>Déjà un compte? <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+            href="?action=login">Se connecter</a>
 </body>
