@@ -25,11 +25,11 @@ class MainController
   * Prend un string en argument.
   *
   * @param string $action L'action réclamée par l'utilisateur.
-  * @return string|int|bool Le controller associé à cette action si existant, page 404 sinon (peut-être à changer).
+  * @return string Le controller associé à cette action si existant, page login sinon (à changer).
   */
   public function getControllerByAction(string $action): string {
     // Définir si on redire sur 404, ou Home si connecté et Login si non-connecté
-    return array_key_exists($action, $this->actions) ? $this->actions[$action] : http_response_code(404);
+    return array_key_exists($action, $this->actions) ? $this->actions[$action] : $this->actions["login"];
   }
 
   /**
@@ -41,7 +41,7 @@ class MainController
   * @return string L'header de la page.
   */
   public function getHeaderByAction(string $action): string {
-    return $action === "login"
+    return $action === "login" || $action === "register"
       ? "<header></header>"
       : '
       <header>
@@ -85,6 +85,11 @@ class MainController
     ';
   }
 
+  /**
+   * Renvoie le footer en fonction de l'action donnée
+   * @param string $action
+   * @return string
+   */
   public function getFooterByAction(string $action): string {
     return "<footer></footer>";
   }
