@@ -5,9 +5,9 @@ $title = "Register";
 $errorAlert = "";
 if ((isset($_POST["email"])) && (isset($_POST["password"])) && (isset($_POST["verifyPassword"]))) {
     $email = ($_POST["email"]);
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $password = password_hash(password: $_POST["password"], algo: PASSWORD_DEFAULT);
     $verifyPassword = ($_POST["verifyPassword"]);
-    $register->saveAccount($email, $password, $verifyPassword) ? header("Location: ?action=login") : $errorAlert = "Erreur lors de la création du compte";
+    $register->saveAccount(email: $email, password: $password, verifyPassword: $verifyPassword) ? header(header: "Location: ?action=login") : $errorAlert = "Erreur lors de la création du compte";
 }
 include_once "$root/views/header.php";
 include_once "$root/views/register.php";

@@ -7,13 +7,13 @@ class Login
         $filepath = "json/accounts.json";
 
         // Lire les données existantes
-        $content = file_get_contents($filepath);
-        $data = json_decode($content, true);
+        $content = file_get_contents(filename: $filepath);
+        $data = json_decode(json: $content, associative: true);
 
         // Vérifier si l'adresse e-mail existe dans les données
         /* @param array<string> $account */
-        $bool = (bool) array_filter($data, function (array $account) use ($email, $password):bool {
-            return isset($account['email']) && $account['email'] === $email && $this->verifyPassword($account, $password);
+        $bool = (bool) array_filter(array: $data, callback: function (array $account) use ($email, $password):bool {
+            return isset($account['email']) && $account['email'] === $email && $this->verifyPassword(account: $account, password: $password);
         });
 
 
@@ -22,6 +22,6 @@ class Login
     /* @param array<string> $account */
     public function verifyPassword(array $account, string $password): bool
     {
-        return password_verify($account['password'], $password);
+        return password_verify(password: $account['password'], hash: $password);
     }
 }

@@ -15,7 +15,7 @@ class MainController
 
   public function getControllerByAction(string $action): string
   {
-    return array_key_exists($action, $this->actions) ? $this->actions[$action] : "LoginController.php";
+    return array_key_exists(key: $action, array: $this->actions) ? $this->actions[$action] : "LoginController.php";
   }
 
   public function getActions(): array

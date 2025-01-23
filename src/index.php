@@ -1,5 +1,5 @@
 <?php
-$root = dirname(__FILE__);
+$root = dirname(path: __FILE__);
 
 include_once "$root/controllers/MainController.php";
 
@@ -11,4 +11,4 @@ if (isset($_REQUEST['action'])) {
 
 $MainController = new MainController();
 
-include_once "$root/controllers/".$MainController->getControllerByAction($action);
+include_once "$root/controllers/" . $MainController->getControllerByAction(action: $action);
