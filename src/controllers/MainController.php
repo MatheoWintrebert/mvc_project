@@ -26,7 +26,7 @@ class MainController {
   * @param string $action L'action réclamée par l'utilisateur.
   * @return string|int|bool Le controller associé à cette action si existant, page 404 sinon (peut-être à changer).
   */
-  public function getControllerByAction(string $action): string {
+  public function getControllerByAction(string $action): string | int | bool {
     // Définir si on redire sur 404, ou Home si connecté et Login si non-connecté
     return array_key_exists($action, $this->actions) ? $this->actions[$action] : http_response_code(404); // isLoggedOn() ? $this->actions["home"] : $this->action["login"];
   }
@@ -42,7 +42,7 @@ class MainController {
   public function getHeaderByAction(string $action): string {
     return $action === "login"
       ? "<header></header>"
-      : '
+      : `
       <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
@@ -81,7 +81,7 @@ class MainController {
         </div>
       </nav>
     </header>
-    ';
+    `;
   }
 
   public function getFooterByAction(string $action): string {
