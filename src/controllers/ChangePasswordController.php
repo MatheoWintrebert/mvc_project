@@ -1,5 +1,5 @@
 <?php
-$hashed_password = password_hash("azertyui", PASSWORD_BCRYPT);
+$hashed_password = password_hash(password: "azertyui", algo: PASSWORD_BCRYPT);
 
 $error_message = "";
 
