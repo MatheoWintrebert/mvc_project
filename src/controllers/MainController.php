@@ -1,4 +1,9 @@
 <?php
+/**
+ * Récupère le controller associé à l'action donnée en paramètre
+ * @param string $action
+ * @return bool|int|string à revoir
+ */
 function getControllerByAction(string $action): string | int | bool {
   /** @var array<string, string> $actions */
   $routes = [
@@ -11,6 +16,11 @@ function getControllerByAction(string $action): string | int | bool {
   return array_key_exists(key: $action, array: $routes) ? $routes[$action] : http_response_code(response_code: 404); // isLoggedOn() ? $routes["home"] : $routes["login"];
 }
 
+/**
+ * Récupère l'header associé à l'action donnée en paramètre
+ * @param string $action
+ * @return string
+ */
 function getHeaderByAction(string $action): string {
   return $action === "login" || $action === "register"
     ? "<header></header>"
@@ -45,7 +55,7 @@ function getHeaderByAction(string $action): string {
 }
 
 /**
- * Renvoie le footer en fonction de l'action donnée
+ * Récupère le footer associé à l'action donnée en paramètre
  * @param string $action
  * @return string
  */
