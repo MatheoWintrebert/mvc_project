@@ -10,12 +10,9 @@ include_once "$root/controllers/MainController.php";
 /** @var string */
 $action = (isset($_REQUEST["action"])) ? $_REQUEST["action"] : "login";
 
-/** @var MainController */
-$MainController = new MainController();
-
-$header = $MainController->getHeaderByAction($action);
-$controller = $MainController->getControllerByAction($action);
-$footer = $MainController->getFooterByAction($action);
+$header = getHeaderByAction($action);
+$controller = getControllerByAction($action);
+$footer = getFooterByAction($action);
 
 include_once "$root/views/header.php";
 include_once "$root/controllers/".$controller;
