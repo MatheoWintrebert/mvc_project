@@ -14,7 +14,7 @@ $header = getHeaderByAction(action: $action);
 $controller = getControllerByAction(action: $action);
 $footer = getFooterByAction(action: $action);
 
-
+$title = "6 Degrees";
 include_once "$root/views/header.php";
 include_once "$root/controllers/".$controller;
 include_once "$root/views/footer.php";
