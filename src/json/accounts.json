@@ -6,5 +6,9 @@
     {
         "email": "egarem@onsod.tn",
         "password": "$2y$10$ICARoH1.3VocHa7bGSer7.g3gSC2QgWhwM1.JEIREPelsSaA3SfCa"
+    },
+    {
+        "email": "test4@test.test",
+        "password": "$2y$10$BXgG1ymFh.B5ycNu4AAKvuJ\/eOG0OhjGK2WCSxS.QRUozkrnzXbwC"
     }
 ]

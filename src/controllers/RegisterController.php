@@ -35,7 +35,9 @@ function decodeJson(string $jsonContent): array
 
 function isEmailAlreadyExists(string $email, array $accounts): bool
 {
-    return !empty(array_filter(array: $accounts, callback: fn($account): bool => isset($account['email']) && $account['email'] === $email));
+    // Utilisation de la fonction filter de lodash
+    $filteredAccounts = filter(array: $accounts, predicate: fn($account): bool => isset($account['email']) && $account['email'] === $email);
+    return !empty($filteredAccounts);
 }
 
 function validateEmail(array $data): ?string
