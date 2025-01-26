@@ -1,4 +1,6 @@
 <?php
+include_once "$root/models/Login.php";
+
 /**
  * Récupère le controller associé à l'action donnée en paramètre
  * @param string $action
@@ -13,7 +15,7 @@ function getControllerByAction(string $action): string | int | bool {
     "changePassword" => "ChangePasswordController.php", 
   ];
   // Définir si on redire sur 404, ou Home si connecté et Login si non-connecté
-  return array_key_exists(key: $action, array: $routes) ? $routes[$action] : http_response_code(response_code: 404); // isLoggedOn() ? $routes["home"] : $routes["login"];
+  return array_key_exists(key: $action, array: $routes) ? $routes[$action] : (isLoggedOn() ? $routes["profile"] : $routes["login"]);
 }
 
 /**
@@ -23,9 +25,9 @@ function getControllerByAction(string $action): string | int | bool {
  */
 function getHeaderByAction(string $action): string {
   return $action === "login" || $action === "register"
-    ? "<header></header>"
+    ? '<header class="mb-3"></header>'
     : '
-    <header>
+    <header class="mb-3">
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Navbar</a>

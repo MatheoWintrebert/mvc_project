@@ -1,10 +1,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 col-sm-7">
-      <h1>Vous êtes connecté en tant que <?php echo $username; ?></h1>
+      <h1><?php echo $email; ?></h1>
       <h2>Nombre de parties gagnées: <?php echo $nbWonGames; ?></h2>
       <h2>Votre rang actuel : <?php echo $currentRank; ?></h2>
-      <a href="./?action=changePassword" class="btn btn-info mt-3">Changer votr emot de passe</a>
+      <a href="./?action=changePassword" class="btn btn-info mt-3">Changer votre mot de passe</a>
+      <a href="./?action=login" class="btn btn-warning mt-3">Se déconnecter</a>
     </div>
     <div class="col-12 col-sm-5">
       <div class="accordion" id="accordionGames">

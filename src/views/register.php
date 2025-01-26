@@ -1,8 +1,9 @@
 <?php declare(strict_types = 1); ?>
 
-<body>
+<div class="container">
     <?php echo $errorAlert !== "" ? '<div class="alert alert-danger" role="alert">' . $errorAlert . '</div>' : ""; ?>
     <form id="registerForm" name="registerForm" method="post" action="./?action=register">
+        <h1>Créer un compte</h1>
         <div class="mb-3">
             <label for="email" class="form-label">Adresse mail</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="exemple@email.com">
@@ -16,8 +17,8 @@
             <input type="password" class="form-control" id="verifyPassword" name="verifyPassword"
                 placeholder="••••••••">
         </div>
-        <button type="submit" class="btn btn-primary">Envoyer</button>
+        <button type="submit" class="btn btn-primary mb-3">Envoyer</button>
     </form>
-    <p>Déjà un compte? <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-            href="?action=login">Se connecter</a>
-</body>
+    <p>Déjà un compte ? <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+            href="?action=login">Se connecter</a></p>
+</div>
