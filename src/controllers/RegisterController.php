@@ -1,8 +1,11 @@
 <?php
 declare(strict_types=1);
+
 require_once "$root/models/Register.php";
-include_once "$root/helpers/session_helper.php";
+require_once "$root/helpers/session_helper.php";
+
 use Respect\Validation\Validator as v;
+
 use function _\filter;
 
 function isEmailValid(string $email): bool
@@ -147,4 +150,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     register(); // Appelle la fonction seulement si le bouton "submit" est cliqué
 }
 
-include_once "$root/views/register.php";
+require_once "$root/views/register.php";

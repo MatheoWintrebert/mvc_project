@@ -1,18 +1,81 @@
 <?php
 declare(strict_types=1);
 
-include_once "$root/models/Login.php";
-include_once "$root/helpers/session_helper.php";
+require_once "$root/models/Login.php";
+require_once "$root/helpers/session_helper.php";
+
 use Respect\Validation\Validator as v;
-$errorAlert = "";
-if (
-    isset($_POST["email"], $_POST["password"]) &&
-    v::email()->validate(input: $_POST["email"]) &&
-    v::password()->validate(input: $_POST["password"])
-) {
-    $email = ($_POST["email"]);
-    $password = password_hash(password: $_POST["password"], algo: PASSWORD_DEFAULT);
-    $login->searchMail(email: $email, password: $password) ? header(header: "Location:?action=profile") : $errorAlert = "Erreur de connexion";
+
+function validateLoginEmail(string $email): ?string
+{
+    // Vérifie si l'email est vide
+    if (empty($email)) {
+        return 'Veuillez remplir l\'adresse mail.';
+    }
+
+    // Vérifie si l'email est valide
+    if (!v::email()->validate(input: $email)) {
+        return 'Adresse email invalide.';
+    }
+
+    return null; // Email valide
 }
 
-include_once "$root/views/login.php";
+function validateLoginPassword(string $password): ?string
+{
+    // Vérifie si le mot de passe est vide
+    if (empty($password)) {
+        return 'Veuillez remplir le champ mot de passe.';
+    }
+
+    return null; // Mot de passe valide
+}
+
+function login(): void
+{
+    // Assainir les entrées de l'utilisateur
+    $_POST = array_map(
+        callback: fn($value): string => htmlspecialchars(string: $value, flags: ENT_QUOTES, encoding: 'UTF-8'),
+        array: $_POST
+    );
+
+    // Initialiser les données de connexion
+    $email = trim(string: $_POST['email'] ?? '');
+    $password = trim(string: $_POST['password'] ?? '');
+
+    // Valider séparément l'email et le mot de passe
+    $emailError = validateLoginEmail(email: $email);
+    $passwordError = validateLoginPassword(password: $password);
+
+    // Gérer les erreurs d'email ou de mot de passe
+    if ($emailError !== null) {
+        flash(name: 'login', message: $emailError, type: 'error');
+        return;
+    }
+
+    if ($passwordError !== null) {
+        flash(name: 'login', message: $passwordError, type: 'error');
+        return;
+    }
+
+    // Vérifier si l'email existe et si le mot de passe correspond
+    if (!emailExists(email: $email)) {
+        flash(name: 'login', message: 'Cet email n\'existe pas.', type: 'error');
+        return;
+    }
+
+    if (!isPasswordCorrect(email: $email, password: $password)) {
+        flash(name: 'login', message: 'Mot de passe incorrect.', type: 'error');
+        return;
+    }
+
+    // Connexion réussie
+    redirect(location: '?action=profile');
+}
+
+// Traiter la requête POST pour la connexion
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+    login(); // Appelle la fonction seulement si le bouton "submit" est cliqué
+}
+
+require_once "$root/views/login.php";

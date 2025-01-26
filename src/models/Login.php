@@ -1,42 +1,63 @@
 <?php
 declare(strict_types=1);
 
-use function _\filter;
-function searchMail(string $email, string $password): bool
+// Helper function to check if email exists
+function emailExists(string $email): bool
 {
     $filepath = "json/accounts.json";
-    if (!file_exists(filename: $filepath)) {
-        return false; // Return false if the file doesn't exist
-    }
-    $content = file_get_contents(filename: $filepath);
-    // Validate the JSON using Respect/Validation
-    $jsonValidator = Respect\Validation\Validator::json()->validate(input: $content);
-    if (!$jsonValidator) {
-        return false; // Return false if JSON is invalid
-    }
-    // Lire les données existantes
-    $data = json_decode(json: $content, associative: true);
 
-    $arrayValidator = Respect\Validation\Validator::arrayType()->each(
-        rule: Respect\Validation\Validator::arrayType()->keySet(
-            Respect\Validation\Validator::key(reference: 'email', referenceValidator: Respect\Validation\Validator::email()),
-            Respect\Validation\Validator::key(reference: 'password', referenceValidator: Respect\Validation\Validator::stringType()->notEmpty())
-        )
-    );
-    if (!$arrayValidator->validate(input: $data)) {
+    if (!file_exists(filename: $filepath)) {
         return false;
     }
-    // Vérifier si l'adresse e-mail existe dans les données
-    /* @param array<string> $account */
-    $bool = filter(array: $data, predicate: function (array $account) use ($email, $password): bool {
-        return isset($account['email'])
-            && $account['email'] === $email
-            && verifyPassword(account: $account, password: $password);
-    });
-    return !empty($bool);
+
+    $content = file_get_contents(filename: $filepath);
+    $accounts = json_decode(json: $content, associative: true) ?? [];
+
+    return !empty(array_filter(
+        array: $accounts,
+        callback: fn($account): bool => isset($account['email']) && $account['email'] === $email
+    ));
 }
-/* @param array<string> $account */
-function verifyPassword(array $account, string $password): bool
+
+// Helper function to verify password
+function isPasswordCorrect(string $email, string $password): bool
 {
-    return password_verify(password: $account['password'], hash: $password);
+    $filepath = "json/accounts.json";
+
+    // Vérifier si le fichier existe
+    if (!file_exists(filename: $filepath)) {
+        flash(name: 'login', message: 'Fichier des comptes introuvable.', type: 'error');
+        return false;
+    }
+
+    // Lire le contenu du fichier JSON
+    $content = file_get_contents(filename: $filepath);
+    $accounts = json_decode(json: $content, associative: true) ?? [];
+
+    // Recherche du compte avec l'email donné
+    $account = current(array: array_filter(
+        array: $accounts,
+        callback: fn($account): bool => isset($account['email']) && $account['email'] === $email
+    ));
+
+    // Vérifier si le compte existe
+    if (!$account) {
+        flash(name: 'login', message: 'Aucun compte trouvé avec cet email.', type: 'error');
+        return false; // Compte non trouvé
+    }
+
+    // Vérifier si le mot de passe existe dans le compte
+    if (!isset($account['password'])) {
+        flash(name: 'login', message: 'Mot de passe introuvable pour cet utilisateur.', type: 'error');
+        return false; // Mot de passe inexistant
+    }
+
+    // Vérification du mot de passe avec password_verify
+    if (password_verify(password: $password, hash: $account['password']) === false) {
+        flash(name: 'login', message: 'Mot de passe incorrect.', type: 'error');
+        return false; // Mot de passe incorrect
+    }
+
+    // Si tout va bien, on retourne true
+    return true; // Mot de passe correct
 }

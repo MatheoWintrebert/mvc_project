@@ -21,7 +21,7 @@
                                 <input type="password" class="form-control" id="password" name="password"
                                     placeholder="••••••••">
                             </div>
-                            <button type="submit" class="btn btn-primary">Connexion</button>
+                            <button type="submit" class="btn btn-primary" name="submit">Connexion</button>
                         </form>
                         <p>Vous n'avez pas de compte? <a href="?action=register">Créer un compte</a></p>
                     </div>

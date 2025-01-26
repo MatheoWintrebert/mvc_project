@@ -22,10 +22,9 @@ function writeAccount(string $email, string $password): bool
     }
 
     // Ajouter un nouveau compte au tableau
-    $hashedPassword = password_hash(password: $password, algo: PASSWORD_BCRYPT); // Hachage du mot de passe
     $data[] = [
         "email" => $email,
-        "password" => $hashedPassword,
+        "password" => $password,
     ];
 
     // Écrire le tableau mis à jour dans le fichier
