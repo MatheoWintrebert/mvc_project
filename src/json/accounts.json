@@ -2,5 +2,25 @@
     "1": {
         "email": "test@test.test",
         "password": "$2y$10$yIodOjOxtXLVBcCHR0muT.538ZivnjGc5VPtcfOrNebfJxIjBHW7G"
+    },
+    "2": {
+        "email": "test4@test.test",
+        "password": "$2y$10$oKT.Z56Utbz21PzGegw.iOH8kRZ12LCLWPgz9EchMXxY.beGFxI3m"
+    },
+    "3": {
+        "email": "test5@test.test",
+        "password": "$2y$10$RPjQY4tFctyG7cUA5qCvueP6kW1jVGEc166A2vWLbtyqWppkIhj3i"
+    },
+    "4": {
+        "email": "test6@test.test",
+        "password": "$2y$10$p9K6X4qUtVygEIHUbn.qi.YnPbk4Zzyzl554raG9guVlQWHPCH4Vm"
+    },
+    "5": {
+        "email": "test8@test.test",
+        "password": "$2y$10$oDPxx0.RVA8D.6Fd2MrXG.dgad2lvSlxF7o4MtKYds4eYD6ZLMsIu"
+    },
+    "6": {
+        "email": "test2@test.test",
+        "password": "$2y$10$1j9Dx5VLoJCctflAap1JQOTpgCjMlFG0Bfz3ASANFwdRg1LtBRWQS"
     }
 }

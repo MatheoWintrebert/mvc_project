@@ -1,20 +1,150 @@
 <?php
 declare(strict_types=1);
-
-include_once "$root/models/Register.php";
+require_once "C:/wamp64/www/project_mvc/vendor/autoload.php";
+require_once "$root/models/Register.php";
+include_once "$root/helpers/session_helper.php";
 use Respect\Validation\Validator as v;
+use function _\filter;
 
-$errorAlert = "";
-if (
-    isset($_POST["email"], $_POST["password"], $_POST["verifyPassword"])
-    && v::email()->validate(input: $_POST["email"]) &&
-    v::password()->validate(input: $_POST["password"]) &&
-    v::password()->validate(input: $_POST["verifyPassword"])
-) {
-    $email = ($_POST["email"]);
-    $password = password_hash(password: $_POST["password"], algo: PASSWORD_DEFAULT);
-    $verifyPassword = ($_POST["verifyPassword"]);
-    $register->saveAccount(email: $email, password: $password, verifyPassword: $verifyPassword) ? header(header: "Location: ?action=login") : $errorAlert = "Erreur lors de la création du compte";
+function isEmailValid(string $email): bool
+{
+    return v::email()->validate(input: $email);
+}
+
+function doesFileExist(string $filepath): bool
+{
+    return file_exists(filename: $filepath);
+}
+
+function getFileContent(string $filepath): string
+{
+    return file_get_contents(filename: $filepath);
+}
+
+function isJsonValid(string $jsonContent): bool
+{
+    return v::json()->validate(input: $jsonContent);
+}
+
+function decodeJson(string $jsonContent): array
+{
+    return json_decode(json: $jsonContent, associative: true) ?? [];
+}
+
+function isEmailAlreadyExists(string $email, array $accounts): bool
+{
+    return !empty(array_filter(array: $accounts, callback: fn($account): bool => isset($account['email']) && $account['email'] === $email));
+}
+
+function validateEmail(array $data): ?string
+{
+    $email = $data['email'] ?? '';
+
+    // Vérifier si l'email est vide ou invalide
+    if (empty($email)) {
+        return 'Veuillez remplir l\'adresse mail';
+    }
+
+    // Valider le format de l'email
+    if (!isEmailValid(email: $email)) {
+        return 'Format d\'email incorrect.';
+    }
+
+    $filepath = "json/accounts.json";
+
+    // Vérifier si le fichier existe
+    if (!doesFileExist(filepath: $filepath)) {
+        return null; // Si le fichier n'existe pas, l'email est valide
+    }
+
+    // Lire et valider le contenu du fichier JSON
+    $content = getFileContent(filepath: $filepath);
+    if (!isJsonValid(jsonContent: $content)) {
+        return 'Erreur de format du fichier JSON.';
+    }
+
+    // Décoder le JSON et vérifier l'existence de l'email
+    $accounts = decodeJson(jsonContent: $content);
+    if (isEmailAlreadyExists(email: $email, accounts: $accounts)) {
+        return 'L\'email est déjà utilisé.';
+    }
+
+    return null; // L'email est valide et n'existe pas
+}
+
+
+// Validation du mot de passe
+function validatePassword(array $data): ?string
+{
+    return empty($data['password']) ? 'Veuillez remplir le champ mot de passe.' :
+        (!v::stringType()->length(min: 6)->validate(input: $data['password']) ? 'Le mot de passe doit contenir au moins 6 caractères.' : null);
+}
+
+// Validation de la confirmation de mot de passe
+function validateVerifyPassword(array $data): ?string
+{
+    return empty($data['verifyPassword']) ? 'Veuillez confirmer votre mot de passe.' :
+        ($data['password'] !== $data['verifyPassword'] ? 'Les mots de passe ne sont pas les mêmes.' : null);
+}
+
+function validate(array $data): ?string
+{
+    // Liste des fonctions de validation
+    $validations = [
+        'validateEmail',
+        'validatePassword',
+        'validateVerifyPassword',
+    ];
+
+    // Utiliser array_reduce pour trouver la première erreur
+    return array_reduce(array: $validations, callback: function ($acc, $validation) use ($data): ?string {
+        // Si une erreur a déjà été trouvée, on la retourne directement
+        if ($acc !== null) {
+            return $acc;
+        }
+        // Appliquer la validation et retourner la première erreur rencontrée
+        return $validation($data);
+    }, initial: null); // initialiser l'accumulateur avec null (pas d'erreur au début)
+}
+
+function register(): void
+{
+    // Échapper les données de $_POST
+    $_POST = array_map(callback: fn($value): string => htmlspecialchars(string: $value, flags: ENT_QUOTES, encoding: 'UTF-8'), array: $_POST);
+
+    // Initialiser les données
+    $data = [
+        'email' => trim(string: $_POST['email'] ?? ''),
+        'password' => trim(string: $_POST['password'] ?? ''),
+        'verifyPassword' => trim(string: $_POST['verifyPassword'] ?? ''),
+    ];
+
+    // Exécution de la validation
+    $error = validate(data: $data);
+
+    // Gestion des erreurs
+    if ($error !== null) {
+        flash(name: 'register', message: $error, type: 'error');
+        return; // Arrêt de l'exécution si erreur
+    }
+
+    // Traitement des données si tout est valide
+    $email = $data['email'];
+    $password = password_hash(password: $data['password'], algo: PASSWORD_DEFAULT);
+
+    // Enregistrer le compte
+    if (writeAccount(email: $email, password: $password) === true) {
+        flash(name: 'register', message: 'Compte créé avec succès !', type: 'success');
+        redirect(location: '?action=login');
+    } else {
+        flash(name: 'register', message: 'Une erreur est survenue lors de la création du compte.', type: 'error');
+        return;
+    }
+}
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+    register(); // Appelle la fonction seulement si le bouton "submit" est cliqué
 }
 
 include_once "$root/views/register.php";

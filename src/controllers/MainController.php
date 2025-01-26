@@ -1,16 +1,18 @@
 <?php
+declare(strict_types=1);
 /**
  * Récupère le controller associé à l'action donnée en paramètre
  * @param string $action
- * @return bool|int|string à revoir
+ * @return bool|int|string
  */
-function getControllerByAction(string $action): string | int | bool {
+function getControllerByAction(string $action): string|int|bool
+{
   /** @var array<string, string> $actions */
   $routes = [
     "login" => "LoginController.php",
     "register" => "RegisterController.php",
     "profile" => "ProfileController.php",
-    "changePassword" => "ChangePasswordController.php", 
+    "changePassword" => "ChangePasswordController.php",
   ];
   // Définir si on redire sur 404, ou Home si connecté et Login si non-connecté
   return array_key_exists(key: $action, array: $routes) ? $routes[$action] : http_response_code(response_code: 404); // isLoggedOn() ? $routes["home"] : $routes["login"];
@@ -21,7 +23,8 @@ function getControllerByAction(string $action): string | int | bool {
  * @param string $action
  * @return string
  */
-function getHeaderByAction(string $action): string {
+function getHeaderByAction(string $action): string
+{
   return $action === "login" || $action === "register"
     ? "<header></header>"
     : '
@@ -59,6 +62,9 @@ function getHeaderByAction(string $action): string {
  * @param string $action
  * @return string
  */
-function getFooterByAction(string $action): string {
+function getFooterByAction(string $action): string
+{
+  if ($action) {
+  }
   return "<footer></footer>";
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 use function _\filter;
 function searchMail(string $email, string $password): bool
 {
-    $bool = false;
     $filepath = "json/accounts.json";
     if (!file_exists(filename: $filepath)) {
         return false; // Return false if the file doesn't exist
@@ -41,4 +40,3 @@ function verifyPassword(array $account, string $password): bool
 {
     return password_verify(password: $account['password'], hash: $password);
 }
-
