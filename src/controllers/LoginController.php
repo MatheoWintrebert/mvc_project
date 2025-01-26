@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 include_once "$root/models/Login.php";
+include_once "$root/helpers/session_helper.php";
 use Respect\Validation\Validator as v;
 $errorAlert = "";
 if (

@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+require_once "C:/wamp64/www/project_mvc/vendor/autoload.php";
 /**
  * Récupère le controller associé à l'action donnée en paramètre
  * @param string $action

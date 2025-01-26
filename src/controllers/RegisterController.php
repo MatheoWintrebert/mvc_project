@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-require_once "C:/wamp64/www/project_mvc/vendor/autoload.php";
 require_once "$root/models/Register.php";
 include_once "$root/helpers/session_helper.php";
 use Respect\Validation\Validator as v;
@@ -18,17 +17,20 @@ function doesFileExist(string $filepath): bool
 
 function getFileContent(string $filepath): string
 {
-    return file_get_contents(filename: $filepath);
+    // Lire le contenu du fichier et retourner une chaîne vide s'il est vide ou inaccessible
+    return file_get_contents(filename: $filepath) ?: '';
 }
 
 function isJsonValid(string $jsonContent): bool
 {
-    return v::json()->validate(input: $jsonContent);
+    // Considérer une chaîne vide comme JSON valide car elle représente un tableau vide par défaut
+    return empty($jsonContent) || v::json()->validate(input: $jsonContent);
 }
 
 function decodeJson(string $jsonContent): array
 {
-    return json_decode(json: $jsonContent, associative: true) ?? [];
+    // Si le contenu est vide, retourner un tableau vide, sinon décoder le JSON
+    return empty($jsonContent) ? [] : (json_decode(json: $jsonContent, associative: true) ?? []);
 }
 
 function isEmailAlreadyExists(string $email, array $accounts): bool
@@ -40,44 +42,40 @@ function validateEmail(array $data): ?string
 {
     $email = $data['email'] ?? '';
 
-    // Vérifier si l'email est vide ou invalide
     if (empty($email)) {
         return 'Veuillez remplir l\'adresse mail';
     }
 
-    // Valider le format de l'email
     if (!isEmailValid(email: $email)) {
         return 'Format d\'email incorrect.';
     }
 
     $filepath = "json/accounts.json";
 
-    // Vérifier si le fichier existe
     if (!doesFileExist(filepath: $filepath)) {
         return null; // Si le fichier n'existe pas, l'email est valide
     }
 
-    // Lire et valider le contenu du fichier JSON
     $content = getFileContent(filepath: $filepath);
+
     if (!isJsonValid(jsonContent: $content)) {
         return 'Erreur de format du fichier JSON.';
     }
 
-    // Décoder le JSON et vérifier l'existence de l'email
     $accounts = decodeJson(jsonContent: $content);
+
     if (isEmailAlreadyExists(email: $email, accounts: $accounts)) {
         return 'L\'email est déjà utilisé.';
     }
 
-    return null; // L'email est valide et n'existe pas
+    return null; // L'email est valide
 }
-
 
 // Validation du mot de passe
 function validatePassword(array $data): ?string
 {
     return empty($data['password']) ? 'Veuillez remplir le champ mot de passe.' :
-        (!v::stringType()->length(min: 6)->validate(input: $data['password']) ? 'Le mot de passe doit contenir au moins 6 caractères.' : null);
+        (v::stringType()->length(min: 6)->validate(input: $data['password']) ? null : 'Le mot de passe doit contenir au moins 6 caractères.');
 }
 
 // Validation de la confirmation de mot de passe
@@ -134,7 +132,7 @@ function register(): void
 
     // Enregistrer le compte
     if (writeAccount(email: $email, password: $password) === true) {
-        flash(name: 'register', message: 'Compte créé avec succès !', type: 'success');
+        flash(name: 'login', message: 'Compte créé avec succès !, Veuillez vous connectez.', type: 'success');
         redirect(location: '?action=login');
     } else {
         flash(name: 'register', message: 'Une erreur est survenue lors de la création du compte.', type: 'error');
