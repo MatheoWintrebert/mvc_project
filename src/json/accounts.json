@@ -2,5 +2,9 @@
     {
         "email": "test4@test.test",
         "password": "$2y$10$rfDf2c9nh512PGe\/xaDaEem1fdBop4oRogUWcAWAGbXZ149lYekYm"
+    },
+    {
+        "email": "test@test.test",
+        "password": "$2y$10$PIcCEBqq00Z13Kn83E7yyOYtSxQGaTuKvXp2tPO0OIQxIL995COJC"
     }
 ]

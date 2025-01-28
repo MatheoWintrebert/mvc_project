@@ -1,17 +1,22 @@
+<?php declare(strict_types=1); ?>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 col-sm-7">
-      <h1>Vous êtes connecté en tant que <?php echo $username; ?></h1>
+      <h1><?php echo $email; ?></h1>
       <h2>Nombre de parties gagnées: <?php echo $nbWonGames; ?></h2>
       <h2>Votre rang actuel : <?php echo $currentRank; ?></h2>
-      <a href="./?action=changePassword" class="btn btn-info mt-3">Changer votr emot de passe</a>
+      <a href="./?action=changePassword" class="btn btn-info mt-3">Changer votre mot de passe</a>
+      <a href="./?action=login" class="btn btn-warning mt-3">Se déconnecter</a>
     </div>
     <div class="col-12 col-sm-5">
       <div class="accordion" id="accordionGames">
         <?php for ($i = 1; $i < 6; $i++) { ?>
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $i; ?>" aria-expanded="false" aria-controls="collapse<?php echo $i; ?>">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse<?php echo $i; ?>" aria-expanded="false"
+                aria-controls="collapse<?php echo $i; ?>">
                 Partie n°<?php echo $i; ?>
               </button>
             </h2>
@@ -25,7 +30,8 @@
               </div>
             </div>
           </div>
-        <?php }; ?>
+        <?php }
+        ; ?>
       </div>
     </div>
   </div>

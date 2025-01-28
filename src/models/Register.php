@@ -13,21 +13,14 @@ function writeAccount(string $email, string $password): bool
 
     $data = []; // Par défaut, un tableau vide
 
-    // Si le fichier existe, charger et valider le contenu JSON
-    if (file_exists(filename: $filepath)) {
-        $content = file_get_contents(filename: $filepath);
-        if (v::json()->validate(input: $content)) {
-            $data = json_decode(json: $content, associative: true) ?? [];
-        }
-    }
+    // Recuperer les données du fichier
+    $data = readJSON(filepath: $filepath) ?? [];
 
     // Ajouter un nouveau compte au tableau
     $data[] = [
         "email" => $email,
         "password" => $password,
     ];
-
     // Écrire le tableau mis à jour dans le fichier
-    $json = json_encode(value: $data, flags: JSON_PRETTY_PRINT);
-    return file_put_contents(filename: $filepath, data: $json) !== false;
+    return writeJSON(data: $data, filepath: $filepath);
 }

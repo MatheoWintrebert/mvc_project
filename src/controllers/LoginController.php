@@ -31,7 +31,7 @@ function validateLoginPassword(string $password): ?string
     return null; // Mot de passe valide
 }
 
-function login(): void
+function loginVerification(): void
 {
     // Assainir les entrées de l'utilisateur
     $_POST = array_map(
@@ -70,12 +70,13 @@ function login(): void
     }
 
     // Connexion réussie
+    login(email: $email, password: $password);
     redirect(location: '?action=profile');
 }
 
 // Traiter la requête POST pour la connexion
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    login(); // Appelle la fonction seulement si le bouton "submit" est cliqué
+    loginVerification(); // Appelle la fonction seulement si le bouton "submit" est cliqué
 }
 
 require_once "$root/views/login.php";

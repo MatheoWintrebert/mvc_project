@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once "$root/models/Register.php";
+require_once "$root/utils/json.php";
 require_once "$root/helpers/session_helper.php";
 
 use Respect\Validation\Validator as v;
