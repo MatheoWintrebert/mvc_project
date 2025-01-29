@@ -11,14 +11,14 @@
       <div class="input-group">
         <input type="password" id="current-password" name="current-password" class="form-control"
           placeholder="••••••••" />
-        <button type="button" class="btn btn-outline-secondary">Show</button>
+        <button type="button" class="btn btn-outline-secondary"></button>
       </div>
     </div>
     <div class="mb-3">
       <label for="current-password" class="form-label">Nouveau mot de passe:</label>
       <div class="input-group">
         <input type="password" id="new-password" name="new-password" class="form-control" placeholder="••••••••" />
-        <button type="button" class="btn btn-outline-secondary">Show</button>
+        <button type="button" class="btn btn-outline-secondary"></button>
       </div>
     </div>
     <div class="mb-3">
@@ -26,7 +26,7 @@
       <div class="input-group">
         <input type="password" id="conf-new-password" name="conf-new-password" class="form-control"
           placeholder="••••••••" />
-        <button type="button" class="btn btn-outline-secondary">Show</button>
+        <button type="button" class="btn btn-outline-secondary"></button>
       </div>
     </div>
     <button type="submit" class="btn btn-primary" name="submit">Valider</button>

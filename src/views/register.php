@@ -18,13 +18,19 @@
                             </div>
                             <div class=" mb-3">
                                 <label for="password" class="form-label">Mot de passe</label>
-                                <input type="password" class="form-control" id="password" name="password"
-                                    placeholder="••••••••">
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        placeholder="••••••••">
+                                    <button type="button" class="btn btn-outline-secondary"></button>
+                                </div>
                             </div>
                             <div class=" mb-3">
                                 <label for="verifyPassword" class="form-label">Vérifier le mot de passe</label>
-                                <input type="password" class="form-control" id="verifyPassword" name="verifyPassword"
-                                    placeholder="••••••••">
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="verifyPassword"
+                                        name="verifyPassword" placeholder="••••••••">
+                                    <button type="button" class="btn btn-outline-secondary"></button>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary" name="submit">Envoyer</button>
                         </form>
