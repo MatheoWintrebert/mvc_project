@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
-
-function writeAccount(string $email, string $password): bool
+function updatePassword(string $email, string $newPassword): bool
 {
     $filepath = "json/accounts.json";
 
@@ -10,16 +9,13 @@ function writeAccount(string $email, string $password): bool
         mkdir(directory: $directory, permissions: 0777, recursive: true);
     }
 
-    $data = []; // Par défaut, un tableau vide
-
     // Recuperer les données du fichier
     $data = readJSON(filepath: $filepath) ?? [];
+    $modifiedData = array_map(
+        callback: fn($account): mixed => $account['email'] === $email ? array_merge($account, ['password' => $newPassword]) : $account,
+        array: $data
+    );
 
-    // Ajouter un nouveau compte au tableau
-    $data[] = [
-        "email" => $email,
-        "password" => $password,
-    ];
     // Écrire le tableau mis à jour dans le fichier
-    return writeJSON(data: $data, filepath: $filepath);
+    return writeJSON(data: $modifiedData, filepath: $filepath);
 }

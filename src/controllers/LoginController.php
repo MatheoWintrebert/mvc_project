@@ -5,7 +5,7 @@ require_once "$root/models/Login.php";
 require_once "$root/helpers/session_helper.php";
 
 use Respect\Validation\Validator as v;
-
+logout();
 function validateLoginEmail(string $email): ?string
 {
     // Vérifie si l'email est vide

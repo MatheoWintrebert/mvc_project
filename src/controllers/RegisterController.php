@@ -138,7 +138,7 @@ function register(): void
 
     // Enregistrer le compte
     if (writeAccount(email: $email, password: $password) === true) {
-        flash(name: 'login', message: 'Compte créé avec succès !, Veuillez vous connectez.', type: 'success');
+        flash(name: 'login', message: 'Compte créé avec succès ! Veuillez vous connecter.', type: 'success');
         redirect(location: '?action=login');
     } else {
         flash(name: 'register', message: 'Une erreur est survenue lors de la création du compte.', type: 'error');
