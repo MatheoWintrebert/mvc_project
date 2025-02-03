@@ -1,8 +1,6 @@
 <?php
 declare(strict_types = 1);
 
-include_once "$root/models/Login.php";
-
 if (isLoggedOn()) {
   $email = $_SESSION["email"];
   $nbWonGames = 19;

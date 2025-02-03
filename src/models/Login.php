@@ -20,8 +20,6 @@ function login(string $email, string $password): array {
     $_SESSION["password"] = $account["password"];
   }
 
-  var_dump($_SESSION);
-
   return ["success" => isset($_SESSION["email"]) && isset($_SESSION["password"]), "email" => $_SESSION["email"] ?? null, "password" => $_SESSION["password"] ?? null];
 }
 
