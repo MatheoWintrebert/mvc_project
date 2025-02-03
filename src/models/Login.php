@@ -26,7 +26,7 @@ function login(string $email, string $password): array {
 
   return [
     "success" => false,
-    "message" => "Email ou mot de passe incorrect."
+    "email" => null
   ];
 }
 
