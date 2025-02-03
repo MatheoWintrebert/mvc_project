@@ -9,14 +9,12 @@ class Account {
    * @param string $email
    * @return array{email: string, password: string}
    */
-  public static function getAccountByEmail(string $email): mixed {
+  public static function getAccountByEmail(string $email): ?array {
     $data = readJSON();
-    $found = array_filter($data, function (array $account) use ($email) {
-      return $account["email"] === $email;
-    });
+    $found = array_filter($data, fn(array $account) => $account["email"] === $email);
     
-    return $found[array_key_first  ($found)];
-  }
+    return $found ? array_values($found)[0] : null;
+}
 
   public static function createAccount($email, $password) {
     $data = readJSON();

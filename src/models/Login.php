@@ -11,16 +11,23 @@ include_once "$root/models/Account.php";
  * @return array{success: bool, email: null|string, password: null|string}
  */
 function login(string $email, string $password): array {
-  $account = Account::getAccountByEmail($email);
-  $emailAccount = $account["email"];
-  $passwordAccount = $account["password"];
+  session_start();
 
-  if (session_start() && $emailAccount === $email && password_verify($password, $passwordAccount)) {
+  $account = Account::getAccountByEmail($email);
+
+  if ($account && isset($account["email"], $account["password"]) && password_verify($password, $account["password"])) {
     $_SESSION["email"] = $account["email"];
-    $_SESSION["password"] = $account["password"];
+    
+    return [
+      "success" => true,
+      "email" => $_SESSION["email"]
+    ];
   }
 
-  return ["success" => isset($_SESSION["email"]) && isset($_SESSION["password"]), "email" => $_SESSION["email"] ?? null, "password" => $_SESSION["password"] ?? null];
+  return [
+    "success" => false,
+    "message" => "Email ou mot de passe incorrect."
+  ];
 }
 
 /**
@@ -28,32 +35,26 @@ function login(string $email, string $password): array {
  * @return void
  */
 function logout(): void {
-  if (!isset($_SESSION)) {
+  if (session_status() === PHP_SESSION_NONE) {
     session_start();
   }
   unset($_SESSION["email"]);
-  unset($_SESSION["password"]);
 }
 
 /**
- * Détermine si le user est connecté
+ * Détermine si l'utilisateur est connecté
  * @return bool
  */
 function isLoggedOn(): bool {
-  if(!isset($_SESSION)) {
-    session_start();
+  if (session_status() === PHP_SESSION_NONE) {
+      session_start();
   }
-  
-  if (empty($_SESSION["email"]) || empty($_SESSION["password"])) {
-    return false;
+
+  if (empty($_SESSION["email"])) {
+      return false;
   }
 
   $account = Account::getAccountByEmail($_SESSION["email"]);
-  // return $account && $account["email"] === $_SESSION["email"] && $account["password"] === $_SESSION["password"];
-
-
-  return empty($_SESSION["email"]) || empty($_SESSION["password"]) ? 
-  false : 
-    Account::getAccountByEmail($_SESSION["email"])["email"] === $_SESSION["email"] &&
-    Account::getAccountByEmail($_SESSION["email"])["password"] === $_SESSION["password"];
+  
+  return !empty($account) && $account["email"] === $_SESSION["email"];
 }
