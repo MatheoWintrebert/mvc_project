@@ -14,7 +14,7 @@ class Account {
     $found = array_filter($data, fn(array $account) => $account["email"] === $email);
     
     return $found ? array_values($found)[0] : null;
-}
+  }
 
   public static function createAccount($email, $password) {
     $data = readJSON();
