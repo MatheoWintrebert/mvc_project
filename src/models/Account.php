@@ -30,11 +30,11 @@ class Account {
    */
   public static function getAccountByEmail(string $email): ?Account {
     $data = readJSON();
-    $found = array_filter($data, fn(array $account) => $account["email"] === $email);
+    $found = array_filter(array: $data, callback: fn(array $account): bool => $account["email"] === $email);
     
-    if (count($found) > 0) {
-      $accountData = array_values($found)[0];
-      return new Account($accountData["email"], $accountData["password"]);
+    if (count(value: $found) > 0) {
+      $accountData = array_values(array: $found)[0];
+      return new Account(email: $accountData["email"], password: $accountData["password"]);
     }
 
     return null;
@@ -48,15 +48,14 @@ class Account {
    */
   public static function updatePasswordByEmail(string $email, string $hashedPassword): bool {
     $data = readJSON();
-    $updatedData = array_map(function ($account) use ($email, $hashedPassword) {
+    $updatedData = array_map(callback: function ($account) use ($email, $hashedPassword): mixed {
       if ($account["email"] === $email) {
         $account["password"] = $hashedPassword;
       }
       return $account;
-    }, $data);
+    }, array: $data);
 
-    $json = json_encode($updatedData, JSON_PRETTY_PRINT);
-    return writeJSON($json);
+    return writeJSON(data: $updatedData);
   }
 
   /**
@@ -72,8 +71,7 @@ class Account {
       "password" => $password
     ];
     
-    $json = json_encode(value: $data, flags: JSON_PRETTY_PRINT);
-    return writeJSON(json: $json);
+    return writeJSON(data: $data);
   }
 
   /**
