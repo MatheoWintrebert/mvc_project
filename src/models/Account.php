@@ -27,6 +27,12 @@ class Account {
     return writeJSON($json);
   }
   
+  /**
+   * Change le mot de passe de l'utilisateur en fonction du mail renseigné
+   * @param string $email
+   * @param string $password
+   * @return bool
+   */
   public static function updatePasswordByEmail(string $email, string $password): bool {
     $filepath = "json/accounts.json";
     $data = readJSON();
