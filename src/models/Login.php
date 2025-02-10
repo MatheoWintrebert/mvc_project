@@ -17,8 +17,8 @@ function login(string $email, string $password): array {
 
   $account = Account::getAccountByEmail($email);
 
-  if ($account && isset($account["email"], $account["password"]) && password_verify($password, $account["password"])) {
-    $_SESSION["email"] = $account["email"];
+  if ($account && password_verify($password, $account->getPassword())) {
+    $_SESSION["email"] = $account->getEmail();
     
     return [
       "success" => true,
@@ -58,5 +58,5 @@ function isLoggedOn(): bool {
 
   $account = Account::getAccountByEmail($_SESSION["email"]);
   
-  return !empty($account) && $account["email"] === $_SESSION["email"];
+  return !empty($account) && $account->getEmail() === $_SESSION["email"];
 }
