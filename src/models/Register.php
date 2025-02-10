@@ -6,12 +6,22 @@ include_once "$root/models/Account.php";
 
 class Register
 {
+    /**
+     * Permet de vérifier que c'est bien un email
+     * @param string $email
+     * @return bool
+     */
     public static function verifyEmail(string $email): bool
     {
         $pattern = '/^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,4}$/';
         return preg_match(pattern: $pattern, subject: $email) === 1;
     }
 
+    /**
+     * Permet de vérifier si l'email existe déjà ou non
+     * @param string $email
+     * @return bool
+     */
     public static function verifyExistingEmail(string $email): bool
     {
         $data = readJSON();
@@ -22,9 +32,13 @@ class Register
         return empty($exists); // Retourne true si aucune correspondance n'est trouvée
     }
 
-
-
-    public static function saveAccount(string $email, string $password, string $verifyPassword): bool
+    /**
+     * Permet de sauvegarder les 
+     * @param string $email
+     * @param string $password
+     * @return bool
+     */
+    public static function saveAccount(string $email, string $password): bool
     {
         return Register::verifyEmail(email: $email) === true ? Register::writeAccount(email: $email, password: $password) : false;
     }
