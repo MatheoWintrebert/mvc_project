@@ -30,15 +30,14 @@ class Account {
   /**
    * Change le mot de passe de l'utilisateur en fonction du mail renseigné
    * @param string $email
-   * @param string $password
+   * @param string $hashedPassword
    * @return bool
    */
-  public static function updatePasswordByEmail(string $email, string $password): bool {
-    $filepath = "json/accounts.json";
+  public static function updatePasswordByEmail(string $email, string $hashedPassword): bool {
     $data = readJSON();
-    $updatedData = array_map(function ($account) use ($email, $password) {
+    $updatedData = array_map(function ($account) use ($email, $hashedPassword) {
         if ($account["email"] === $email) {
-            $account["password"] = password_hash($password, PASSWORD_DEFAULT);
+            $account["password"] = $hashedPassword;
         }
         return $account;
     }, $data);

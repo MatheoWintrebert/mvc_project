@@ -1,38 +1,43 @@
 <?php
-include_once "$root/models/Account.php";
+declare(strict_types=1);
 
-if (isLoggedOn()) {
-  $account = Account::getAccountByEmail($_SESSION["email"]);
+require_once "$root/../vendor/autoload.php";
+require_once "$root/models/Account.php";
 
-  $alert = "";
-  if ($_SERVER["REQUEST_METHOD"] === "POST") {  
-    if (
-      empty($_POST["current-password"]) ||
-      empty($_POST["new-password"]) ||
-      empty($_POST["conf-new-password"])
-    ) {
-      $alert = "Veuillez remplir l'ensemble des champs";
-    }   
-    elseif (strlen(string: $_POST["new-password"]) < 8) {
-      $alert = "Le nouveau mot de passe doit faire plus de 8 caractères de long";
-    }   
-    elseif ($_POST["new-password"] !== $_POST["conf-new-password"]) {
-      $alert = "La confirmation du nouveau mot de passe ne correspond pas à celui qu'il y a au-dessus";
-    }   
-    elseif (!password_verify(password: $_POST["current-password"], hash: $account["password"])) {
-      $alert = "Le mot de passe renseigné dans le champ \"Mot de passe actuel\" ne correspond pas à celui que nous avons";
-    } elseif (!Account::updatePasswordByEmail($_SESSION["email"], $_POST["new-password"])) {
-      $alert = "Une erreur est survenue lors de la mise à jour";
-    }
-    
-    if (empty($alert)) {    
-      header(header: "Location: index.php/?action=login");
-      exit;
-    }
-  }
+use Respect\Validation\Validator as v;
 
-  include_once "$root/views/changePassword.php";
-} else {
-  header("Location: ?action=login");
-  exit;
+if (!isLoggedOn()) {
+    header("Location: ?action=login");
+    exit;
 }
+
+$account = Account::getAccountByEmail($_SESSION["email"]);
+$errorAlert = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $currentPassword = $_POST["current-password"] ?? "";
+    $newPassword = $_POST["new-password"] ?? "";
+    $confirmNewPassword = $_POST["conf-new-password"] ?? "";
+    $passwordValidator = v::length(8, null)->notEmpty();
+    
+    if (empty($currentPassword) || empty($newPassword) || empty($confirmNewPassword)) {
+        $errorAlert = "Veuillez remplir l'ensemble des champs.";
+    } elseif (!$passwordValidator->validate($newPassword)) {
+        $errorAlert = "Le nouveau mot de passe doit contenir au moins 8 caractères.";
+    } elseif ($newPassword !== $confirmNewPassword) {
+        $errorAlert = "La confirmation du mot de passe ne correspond pas.";
+    } elseif (!password_verify($currentPassword, $account["password"])) {
+        $errorAlert = "Le mot de passe actuel est incorrect.";
+    } else {        
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        
+        if (!Account::updatePasswordByEmail($_SESSION["email"], $hashedPassword)) {
+            $errorAlert = "Une erreur est survenue lors de la mise à jour du mot de passe.";
+        } else {
+            header("Location: index.php/?action=login");
+            exit;
+        }
+    }
+}
+
+include_once "$root/views/changePassword.php";
