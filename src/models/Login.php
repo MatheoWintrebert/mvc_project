@@ -11,7 +11,9 @@ include_once "$root/models/Account.php";
  * @return array{success: bool, email: null|string, password: null|string}
  */
 function login(string $email, string $password): array {
-  session_start();
+  if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+  }
 
   $account = Account::getAccountByEmail($email);
 
