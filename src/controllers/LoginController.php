@@ -3,33 +3,31 @@ declare(strict_types=1);
 
 require_once "$root/../vendor/autoload.php";
 require_once "$root/models/Login.php";
+require_once "$root/utils/Alert.php";
 
 use Respect\Validation\Validator as v;
 
 logout();
 
-$errorAlert = "";
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $email = $_POST["email"] ?? "";
-  $password = $_POST["password"] ?? "";
+  $email = trim($_POST["email"] ?? "");
+  $password = trim($_POST["password"] ?? "");
 
-  // Validation Respect\Validation
   $emailValidator = v::email()->notEmpty();
   $passwordValidator = v::notEmpty();
 
   if (!$emailValidator->validate($email)) {
-    $errorAlert = "L'email est invalide.";
+    Alert::save(new Alert("L'email est invalide.", "danger"));
   } elseif (!$passwordValidator->validate($password)) {
-    $errorAlert = "Le mot de passe ne peut pas être vide.";
+    Alert::save(new Alert("Le mot de passe ne peut pas être vide.", "danger"));
   } else {
-    $loginResult = login(email: $email, password: $password);
+    $loginResult = login($email, $password);
 
     if ($loginResult["success"]) {
       header("Location: ?action=profile");
       exit;
     } else {
-      $errorAlert = "Erreur de connexion.";
+      Alert::save(new Alert("Erreur de connexion.", "danger"));
     }
   }
 }

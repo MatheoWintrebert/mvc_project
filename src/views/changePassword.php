@@ -2,7 +2,10 @@
 
 <div class="container">
   <form method="POST" action="./?action=changePassword">
-    <?php echo isset($errorAlert) && !empty($errorAlert) ? '<div class="alert alert-danger" role="alert">'.$errorAlert.'</div>' : ""; ?>
+    <?php if ($alert = Alert::getFromSession()): ?>
+      <?= $alert->render(); ?>
+      <?php Alert::clear(); ?>
+    <?php endif; ?>
     <div class="mb-3">
       <label for="current-password" class="form-label">Mot de passe actuel:</label>
       <input type="password" id="current-password" name="current-password" class="form-control"/>

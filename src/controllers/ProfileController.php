@@ -11,6 +11,6 @@ if (isLoggedOn()) {
 
   include_once "$root/views/profile.php";
 } else {
-  header("Location: ?action=login");
+  header(header: "Location: ?action=login");
   exit;
 }

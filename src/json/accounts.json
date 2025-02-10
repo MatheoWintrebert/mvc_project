@@ -1,10 +1,6 @@
 [
     {
         "email": "password@123456789.com",
-        "password": "$2y$10$72kB4nqqjcY9gkykL69.Nuj.oSA\/WVs0Z8DuGhXDtcqOZ9\/AEcZS6"
-    },
-    {
-        "email": "test@test.com",
-        "password": "$2y$12$eeGeSxequKT8\/TKp5lnrZeVzXtuxTRub561n2WDemHvUfwbIGnKH2"
+        "password": "$2y$10$Bh38jIPhmnYS81T0Ptrh9eLWd8frji7K7QX4SOngYEfYY6Hcz0oE."
     }
 ]
