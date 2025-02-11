@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once "C:/wamp64/www/project_mvc/vendor/autoload.php";
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 /**
  * Récupère le controller associé à l'action donnée en paramètre
  * @param string $action
@@ -14,6 +14,7 @@ function getControllerByAction(string $action): string|int|bool
     "register" => "RegisterController.php",
     "profile" => "ProfileController.php",
     "changePassword" => "ChangePasswordController.php",
+    "game" => "GameController.php",
   ];
   // Définir si on redire sur 404, ou Home si connecté et Login si non-connecté
   return array_key_exists(key: $action, array: $routes) ? $routes[$action] : http_response_code(response_code: 404); // isLoggedOn() ? $routes["home"] : $routes["login"];
