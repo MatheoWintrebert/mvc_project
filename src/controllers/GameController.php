@@ -4,7 +4,6 @@ require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 require_once __DIR__ . '/../models/GameModel.php';
 
 $model = new GameModel();
-$model->initializeGame();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['reset'])) {
@@ -17,6 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = $model->validateActorConnection($_SESSION['actor1'], $actor3, $movie);
     }
 }
+
+$model->initializeGame();
 
 
 $actor2 = $_SESSION['actor2'] ?? ''; // Retrieve actor2 from session
