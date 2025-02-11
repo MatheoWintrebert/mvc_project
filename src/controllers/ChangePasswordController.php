@@ -37,6 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     Alert::save(alert: new Alert(message: "La confirmation du mot de passe ne correspond pas.", className: "danger"));
   } elseif (!password_verify(password: $currentPassword, hash: $account->getPassword())) {
     Alert::save(alert: new Alert(message: "Le mot de passe actuel est incorrect.", className: "danger"));
+  } elseif ($currentPassword === $newPassword) {
+    Alert::save(alert: new Alert(message: "Le nouveau mot de passe ne peut être identique à l'ancien.", className: "danger"));
   } else {        
     $hashedPassword = password_hash(password: $newPassword, algo: PASSWORD_DEFAULT);
       
