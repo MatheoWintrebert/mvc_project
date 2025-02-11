@@ -6,13 +6,15 @@ include_once "$root/models/Login.php";
  * @param string $action
  * @return bool|int|string à revoir
  */
-function getControllerByAction(string $action): string | int | bool {
+function getControllerByAction(string $action): string|int|bool
+{
   /** @var array<string, string> $actions */
   $routes = [
     "login" => "LoginController.php",
     "register" => "RegisterController.php",
     "profile" => "ProfileController.php",
-    "changePassword" => "ChangePasswordController.php", 
+    "changePassword" => "ChangePasswordController.php",
+    "game" => "GameController.php"
   ];
   // Définir si on redire sur 404, ou Home si connecté et Login si non-connecté
   return array_key_exists(key: $action, array: $routes) ? $routes[$action] : (isLoggedOn() ? $routes["profile"] : $routes["login"]);
@@ -23,7 +25,8 @@ function getControllerByAction(string $action): string | int | bool {
  * @param string $action
  * @return string
  */
-function getHeaderByAction(string $action): string {
+function getHeaderByAction(string $action): string
+{
   return $action === "login" || $action === "register"
     ? '<header class="mb-3"></header>'
     : '
@@ -61,6 +64,7 @@ function getHeaderByAction(string $action): string {
  * @param string $action
  * @return string
  */
-function getFooterByAction(string $action): string {
+function getFooterByAction(string $action): string
+{
   return "<footer></footer>";
 }

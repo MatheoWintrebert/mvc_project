@@ -2,5 +2,9 @@
     {
         "email": "password@123456789.com",
         "password": "$2y$10$Bh38jIPhmnYS81T0Ptrh9eLWd8frji7K7QX4SOngYEfYY6Hcz0oE."
+    },
+    {
+        "email": "icham.duret14@gmail.com",
+        "password": "$2y$10$nv3btz6tAx13SPblNTLwNundPRS60WgSh5YhurCugEma2Hp50ORvC"
     }
 ]
