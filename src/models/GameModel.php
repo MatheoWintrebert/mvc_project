@@ -103,7 +103,7 @@ class GameModel
             "Marion Cotillard",
             "Daniel Day-Lewis",
             "Rami Malek",
-            "Lupita Nyong’o",
+            "Lupita Nyong\’o",
             "Dev Patel",
             "Michelle Yeoh",
             "Ken Watanabe",
