@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $loginResult = login($email, $password);
 
     if ($loginResult["success"]) {
-      header("Location: ?action=profile");
+      header("Location: ?action=game");
       exit;
     } else {
       Alert::save(new Alert("Erreur de connexion.", "danger"));
